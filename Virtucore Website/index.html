@@ -49,8 +49,15 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Video Background -->
     <section class="hero">
+        <div class="video-background">
+            <video autoplay muted loop playsinline>
+                <source src="content/website_video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
         <div class="container">
             <div class="hero-content">
                 <h1>Transforming Your <br>Ideas into <span class="gradient-text">Reality</span></h1>
@@ -117,7 +124,7 @@
                         </a>
                     </div>
                     <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1593508512255-86ab42a0e620?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1478&q=80" alt="Rapid Prototyping & MVP Development">
+                        <img src="content/rapid_prototyping.png" alt="Rapid Prototyping & MVP Development">
                     </div>
                 </div>
                 
@@ -140,7 +147,7 @@
                         </a>
                     </div>
                     <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1618004652321-8a1e9c6e0a6b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="3D & Game Assets">
+                        <img src="content/3d_assets.png" alt="3D & Game Assets">
                     </div>
                 </div>
                 
@@ -163,12 +170,12 @@
                         </a>
                     </div>
                     <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="VR & Simulation">
+                        <img src="content/vr_and_sim.png" alt="VR & Simulation">
                     </div>
                 </div>
                 
                 <!-- Web & Interactive Design -->
-                <div class="service-feature">
+                <div class="service-feature reverse">
                     <div class="service-content">
                         <span class="service-number">04</span>
                         <h3>Web & Interactive Design</h3>
@@ -187,12 +194,12 @@
                         </a>
                     </div>
                     <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Web & Interactive Design">
+                        <img src="content/web_design.png" alt="Web & Interactive Design">
                     </div>
                 </div>
                 
                 <!-- Product Visualization -->
-                <div class="service-feature reverse">
+                <div class="service-feature">
                     <div class="service-content">
                         <span class="service-number">05</span>
                         <h3>Product Visualization</h3>
@@ -211,7 +218,7 @@
                         </a>
                     </div>
                     <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Product Visualization">
+                        <img src="content/product_visualization.png" alt="Product Visualization">
                     </div>
                 </div>
                 
@@ -626,14 +633,100 @@
                     <a href="#">Cookie Settings</a>
                 </div>
             </div>
-        </div>
     </footer>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
-    <script src="js/contact.js"></script>
-    <script src="js/process.js"></script>
-    <script src="js/slider.js"></script>
-    <script src="js/service-slider.js"></script>
+    
+    <!-- Work in Progress Overlay -->
+    <div id="wip-overlay">
+        <div class="wip-content">
+            <h2>Work in Progress</h2>
+            <p>This website is currently under development. Some features may not be fully functional.</p>
+            <button id="dismiss-wip" class="btn btn-primary">I understand</button>
+        </div>
+    </div>
+    
+    <style>
+        #wip-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-family: 'Source Code Pro', monospace;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .wip-content {
+            max-width: 500px;
+            background: rgba(31, 31, 31, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid #7e51ff;
+        }
+        
+        #wip-overlay h2 {
+            color: #7e51ff;
+            margin-top: 0;
+            font-size: 2rem;
+        }
+        
+        #wip-overlay p {
+            margin: 1rem 0 1.5rem;
+            line-height: 1.6;
+        }
+        
+        #dismiss-wip {
+            background: #7e51ff;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #dismiss-wip:hover {
+            background: #6a3dff;
+            transform: translateY(-2px);
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const wipOverlay = document.getElementById('wip-overlay');
+            const dismissBtn = document.getElementById('dismiss-wip');
+            
+            // Check if user has previously dismissed the overlay
+            if (!localStorage.getItem('wipDismissed')) {
+                wipOverlay.style.display = 'flex';
+            }
+            
+            // Handle dismiss button click
+            dismissBtn.addEventListener('click', function() {
+                wipOverlay.style.display = 'none';
+                localStorage.setItem('wipDismissed', 'true');
+            });
+            
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    wipOverlay.style.display = 'none';
+                    localStorage.setItem('wipDismissed', 'true');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -524,12 +524,50 @@ h2:after {
 /* Hero Section */
 .hero {
   padding: 8rem 0 8rem;
-  background: linear-gradient(180deg, #0A0A0F 0%, #1A1A2E 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+}
+
+/* Video Background */
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.video-background video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  filter: blur(4.5px);
+  -webkit-filter: blur(4.5px);
+  transform: translate(-50%, -40%) translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(123, 44, 191, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%);
+  z-index: 1;
 }
 
 .hero::before {
@@ -1087,30 +1125,60 @@ h2:after {
 .btn-arrow:hover {
   color: var(--white);
 }
-
 .btn-arrow:hover svg {
   transform: translateX(5px);
 }
 
 .service-image {
   position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 16px;
+  overflow: visible;
   height: 100%;
   min-height: 400px;
+  padding: 8px; /* Increased padding for better border visibility */
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Add margin to prevent border cutoff */
+  margin: 2px;
+  /* Ensure the border is visible during transform */
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .service-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 10px;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 1;
+  border: none;
+  /* Ensure the image doesn't cause overflow */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.service-feature {
+  /* Add padding to prevent border cutoff */
+  padding: 2px;
+  overflow: visible;
+}
+
+.service-feature:hover .service-image {
+  transform: translateY(-5px) translateZ(0);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
 }
 
 .service-feature:hover .service-image img {
-  transform: scale(1.05);
+  transform: scale(1.02);
+}
+
+/* Ensure the container has enough space for the border */
+.services-showcase {
+  overflow: visible;
 }
 
 .cta-banner {
@@ -1926,19 +1994,13 @@ h2:after {
     margin: 3rem 0;
 }
 
-.work-item {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    aspect-ratio: 16/9;
-}
+/* Service image styles are now consolidated above */
 
 .work-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
+
 
 .work-image {
     position: relative;

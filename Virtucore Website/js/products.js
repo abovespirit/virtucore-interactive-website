@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             description: 'Complete VR development kit with all the tools needed to create immersive virtual reality experiences.',
             price: 1999.99,
             originalPrice: 2499.99,
-            image: 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            image: 'content/3d_assets.png',
             badge: 'sale',
             stock: 15
         },
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: 'ar',
             description: 'Next-generation augmented reality glasses with high-resolution displays and advanced tracking.',
             price: 1299.99,
-            image: 'https://images.unsplash.com/photo-1621609764095-b2bbea08d0bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            image: 'content/web_design.png',
             badge: 'new',
             stock: 8
         },
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
             description: 'Experience the best of both worlds with our premium mixed reality headset.',
             price: 1799.99,
             originalPrice: 1999.99,
-            image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            image: 'content/vr_and_sim.png',
             badge: 'sale',
             stock: 5
         },
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: 'webxr',
             description: 'Everything you need to start building WebXR experiences right in the browser.',
             price: 499.99,
-            image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            image: 'content/rapid_prototyping.png',
             badge: null,
             stock: 20
         },
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             description: 'Professional 360° camera for capturing immersive VR content with stunning quality.',
             price: 899.99,
             originalPrice: 1099.99,
-            image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            image: 'content/product_visualization.png',
             badge: 'sale',
             stock: 12
         },
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             category: 'vr',
             description: 'Experience true touch feedback in virtual reality with our advanced haptic gloves.',
             price: 599.99,
-            image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+            image: 'content/3d_assets.png',
             badge: 'new',
             stock: 10
         }
