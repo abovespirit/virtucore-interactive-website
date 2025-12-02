@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Permissions-Policy" content="autoplay=*, accelerometer=*, clipboard-write=*, encrypted-media=*, gyroscope=*, picture-in-picture=*">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/products.css">
     <link rel="stylesheet" href="css/contact.css">
@@ -52,10 +53,13 @@
     <!-- Hero Section with Video Background -->
     <section class="hero">
         <div class="video-background">
-            <video autoplay muted loop playsinline>
-                <source src="content/website_video.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <iframe id="youtube-player"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                src="https://www.youtube.com/embed/5zcVf3CJ3ZQ?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=5zcVf3CJ3ZQ&enablejsapi=1"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
             <div class="video-overlay"></div>
         </div>
         <div class="container">
@@ -65,26 +69,6 @@
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary">Start Your Project</a>
                     <a href="#solutions" class="btn btn-outline">Explore Our Solutions</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="ar-preview">
-                    <div class="device-mockup">
-                        <div class="screen">
-                            <div class="app-interface">
-                                <div class="app-header">
-                                    <span class="app-logo">VC</span>
-                                    <span class="app-title">Virtucore AR</span>
-                                </div>
-                                <div class="app-content">
-                                    <div class="ar-object">
-                                        <img src="https://placehold.co/600x400/7B2CBF/00F0FF/png?text=AR+Preview" alt="AR Experience Preview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="device-frame"></div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -635,9 +619,177 @@
             </div>
     </footer>
 
-    <!-- JavaScript -->
     <script src="js/main.js"></script>
+    <script src="js/script.js"></script>
     
+    <!-- Video Player Implementation -->
+    <script>
+        // Function to initialize YouTube Player
+        function initYouTubePlayer() {
+            // Check if YouTube API is already loaded
+            if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+                // Load YouTube IFrame API
+                var tag = document.createElement('script');
+                tag.src = 'https://www.youtube.com/iframe_api';
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                
+                // Set a timeout to check if YouTube API loaded
+                var youTubeAPILoaded = false;
+                var youTubeLoadCheck = setInterval(function() {
+                    if (typeof YT !== 'undefined' && YT.loaded) {
+                        clearInterval(youTubeLoadCheck);
+                        youTubeAPILoaded = true;
+                        onYouTubeIframeAPIReady();
+                    }
+                }, 100);
+                
+                // If YouTube API doesn't load in 3 seconds, use fallback
+                setTimeout(function() {
+                    if (!youTubeAPILoaded) {
+                        console.log('YouTube API failed to load, using fallback video');
+                        showFallbackVideo();
+                    }
+                }, 3000);
+            } else {
+                // If YouTube API is already loaded
+                onYouTubeIframeAPIReady();
+            }
+        }
+
+        // YouTube Player variables
+        var player;
+        var playerInitialized = false;
+        
+        // This function is called when the YouTube API is ready
+        function onYouTubeIframeAPIReady() {
+            try {
+                player = new YT.Player('youtube-container', {
+                    height: '100%',
+                    width: '100%',
+                    videoId: '5zcVf3CJ3ZQ',
+                    playerVars: {
+                        'autoplay': 1,
+                        'controls': 0,
+                        'disablekb': 1,
+                        'enablejsapi': 1,
+                        'fs': 0,
+                        'iv_load_policy': 3,
+                        'loop': 1,
+                        'modestbranding': 1,
+                        'playsinline': 1,
+                        'rel': 0,
+                        'showinfo': 0,
+                        'mute': 1,
+                        'origin': window.location.origin
+                    },
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onError': onPlayerError,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+                playerInitialized = true;
+            } catch (e) {
+                console.error('YouTube Player Error:', e);
+                showFallbackVideo();
+            }
+        }
+
+        // When player is ready
+        function onPlayerReady(event) {
+            try {
+                event.target.mute();
+                event.target.playVideo();
+                // Hide fallback video if it was shown
+                document.getElementById('fallback-video').style.display = 'none';
+                console.log('YouTube player ready');
+            } catch (e) {
+                console.error('Error in onPlayerReady:', e);
+                showFallbackVideo();
+            }
+        }
+
+        // Handle player errors
+        function onPlayerError(event) {
+            console.error('YouTube Player Error:', event.data);
+            showFallbackVideo();
+        }
+
+        // Handle player state changes
+        function onPlayerStateChange(event) {
+            // If video ends, play it again (for loop)
+            if (event.data === YT.PlayerState.ENDED) {
+                player.playVideo();
+            }
+            // If there's an error or video is unplayable
+            if (event.data === YT.PlayerState.ERROR || event.data === YT.PlayerState.UNSTARTED) {
+                console.log('YouTube player state:', event.data);
+                // Give it a moment and check again
+                setTimeout(function() {
+                    if (player && player.getPlayerState() === YT.PlayerState.UNSTARTED) {
+                        showFallbackVideo();
+                    }
+                }, 2000);
+            }
+        }
+
+        // Show fallback video
+        function showFallbackVideo() {
+            var fallbackVideo = document.getElementById('fallback-video');
+            var youtubeContainer = document.getElementById('youtube-container');
+            
+            if (youtubeContainer) {
+                youtubeContainer.style.display = 'none';
+            }
+            
+            if (fallbackVideo) {
+                fallbackVideo.style.display = 'block';
+                fallbackVideo.play().catch(function(error) {
+                    console.error('Fallback video error:', error);
+                    // If even the fallback fails, show a static image
+                    fallbackVideo.style.background = '#000';
+                    fallbackVideo.innerHTML = '';
+                });
+            }
+        }
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Pause video when tab is not active
+                if (player && typeof player.pauseVideo === 'function') {
+                    player.pauseVideo();
+                }
+                var fallbackVideo = document.getElementById('fallback-video');
+                if (fallbackVideo && !fallbackVideo.paused) {
+                    fallbackVideo.pause();
+                }
+            } else {
+                // Resume video when tab becomes active
+                if (player && typeof player.playVideo === 'function') {
+                    player.playVideo();
+                }
+                var fallbackVideo = document.getElementById('fallback-video');
+                if (fallbackVideo && fallbackVideo.paused) {
+                    fallbackVideo.play().catch(console.error);
+                }
+            }
+        });
+
+        // Initialize the video player when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initYouTubePlayer();
+            
+            // If YouTube player fails to initialize within 5 seconds, show fallback
+            setTimeout(function() {
+                if (!playerInitialized) {
+                    console.log('YouTube player initialization timed out, using fallback');
+                    showFallbackVideo();
+                }
+            }, 5000);
+        });
+    </script>
     <!-- Work in Progress Overlay -->
     <div id="wip-overlay">
         <div class="wip-content">
@@ -728,5 +880,47 @@
             });
         });
     </script>
+
+    <script>
+    // Load YouTube IFrame API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtube-player', {
+            height: '100%',
+            width: '100%',
+            videoId: '5zcVf3CJ3ZQ',
+            playerVars: {
+                'autoplay': 1,
+                'mute': 1,
+                'controls': 0,
+                'showinfo': 0,
+                'rel': 0,
+                'loop': 1,
+                'playlist': '5zcVf3CJ3ZQ',
+                'origin': window.location.origin,
+                'enablejsapi': 1
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onError': onPlayerError
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        event.target.mute();
+        event.target.playVideo();
+    }
+
+    function onPlayerError(event) {
+        console.error('YouTube Player Error:', event.data);
+    }
+</script>
+
 </body>
 </html>
