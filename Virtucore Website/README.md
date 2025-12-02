@@ -1,6 +1,6 @@
 # Virtucore Website
 
-A modern, responsive website for Virtucore, an AR/VR development company. This website combines the best elements from wear-studio.com and unlockedstudios.net to create a professional online presence.
+A modern, responsive website for Virtucore, an AR/VR development company. 
 
 ## Features
 
